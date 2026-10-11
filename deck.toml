@@ -1,0 +1,25 @@
+[deck]
+title       = "My Deck"
+summary     = "One line that tells a student what this deck is for."
+description = """
+Longer description shown under "About this deck" on Deck Cloud.
+Say what it covers, who it's for, and which exam or course it follows.
+"""
+keywords    = ["example"]
+
+# Shown on the Deck Cloud page. Use an SPDX id: CC-BY-SA-4.0, CC-BY-4.0,
+# CC0-1.0, Unlicense. Credit every upstream source you adapted.
+license     = "CC-BY-SA-4.0"
+attribution = "Written by <your name>. Images credited in CREDITS.md."
+source_url  = "https://github.com/<owner>/<repo>/blob/main/CREDITS.md"
+
+[sync]
+media_root = "media/"
+
+[[models]]
+name   = "Basic"
+fields = ["Front", "Back", "Extra"]
+
+[[models]]
+name   = "Cloze"
+fields = ["Text", "Extra"]
