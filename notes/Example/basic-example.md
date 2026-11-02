@@ -14,5 +14,5 @@ It is the heart's <b>primary pacemaker</b>.
 
 ## Extra
 
-Images go in media/ and are referenced relative to the note file, for example
-`![SA node](../../media/sa-node.png)`. List each one in CREDITS.md.
+The SA node sits in the wall of the right atrium. To add a picture, put the
+file in media/ and reference it relative to this note (see AGENTS.md).

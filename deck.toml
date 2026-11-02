@@ -12,14 +12,3 @@ keywords    = ["example"]
 license     = "CC-BY-SA-4.0"
 attribution = "Written by <your name>. Images credited in CREDITS.md."
 source_url  = "https://github.com/<owner>/<repo>/blob/main/CREDITS.md"
-
-[sync]
-media_root = "media/"
-
-[[models]]
-name   = "Basic"
-fields = ["Front", "Back", "Extra"]
-
-[[models]]
-name   = "Cloze"
-fields = ["Text", "Extra"]

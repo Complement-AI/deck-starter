@@ -25,10 +25,10 @@ sync.
 | --- | --- | --- |
 | `title` | yes | Deck name on Deck Cloud |
 | `summary` | yes | One-line teaser |
-| `description` | no | Long text, shown under "About this deck" |
+| `description` | recommended | Long text, shown under "About this deck" |
 | `keywords` | no | Topics used for browsing and filters |
 | `license` | no | SPDX id, shown on the deck page |
-| `attribution` | no | Credit for upstream authors and sources |
+| `attribution` | recommended | Credit for upstream authors and sources |
 | `source_url` | no | Link to full credits (usually `CREDITS.md`) |
 
 The manifest overrides anything entered when the deck was created, on every
@@ -80,7 +80,26 @@ Decks on Deck Cloud must be yours or openly licensed.
 This template is released under [CC BY-SA 4.0](LICENSE), the license
 Complement uses for its own decks.
 
+## Check before you push
+
+```sh
+python3 scripts/check_deck.py
+```
+
+It lists every problem with its file. The same check runs on every push and
+pull request (`.github/workflows/check-deck.yml`). Create notes with
+`python3 scripts/new_note.py "<Subdeck>" <slug> [--model Basic]` (Cloze by
+default) so each one gets a fresh id.
+
 ## Connect to Complement
+
+With an AI agent (Claude Code, Claude Desktop, or any MCP client connected to
+Complement): ask it to publish the repo. It reads [AGENTS.md](AGENTS.md),
+pushes, and calls `publish_deck_from_github`, which returns the deck's link.
+Calling it again after a push publishes the new version to everyone who added
+the deck.
+
+By hand:
 
 1. On Deck Cloud, choose **Publish from GitHub** and paste the repo URL.
 2. Click **Open GitHub webhook settings**, paste the secret it shows you, and
