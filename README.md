@@ -61,8 +61,9 @@ Supporting context.
   `## Text` and `## Extra`.
 - Any other model makes one card per note. Sections are usually `## Front`,
   `## Back` and `## Extra`.
-- Use HTML `<b>` and `<u>` for emphasis; Markdown `**bold**` shows literal
-  asterisks.
+- Use HTML `<b>` and `<u>` for emphasis (Markdown `**bold**` works too). No
+  inline colors: most students study in a dark theme.
+- Math: `\(…\)` inline, `\[…\]` on its own line; never `[latex]`.
 - Reference media relative to the note file: `![alt](../../media/file.png)`.
   Sync uploads it and rewrites the link.
 

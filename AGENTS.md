@@ -5,6 +5,10 @@ from GitHub and publishes them on Deck Cloud, where students add the deck and
 study it. You write notes as files, check them, commit, push, and publish.
 The user decides what goes in the deck and when it is published.
 
+For how cards look on web and iOS, how new cards are scheduled, and limits,
+the Complement MCP tool `get_guide` has a topic each (`rendering`,
+`scheduling`, `shared_decks`, `limits`).
+
 ## The loop
 
 1. **Set up once.** Make a public repo from this template:
@@ -29,6 +33,8 @@ The user decides what goes in the deck and when it is published.
    `check_only: true` first: `would_change` lists the notes that would be
    added, edited, moved and removed, and every card students would lose.
    Show the user any removals before you publish.
+   Publishes of one deck run one at a time: a second call waits up to 90 s
+   for the first to finish, so don't retry a publish that hasn't returned.
    Pass `release_note`: one or two sentences from the user to their students,
    in the user's voice, about what changed for them ("Week 3 is up:
    antiplatelets for Thursday. Fixed the nebivolol card."). Students see it on
@@ -108,10 +114,19 @@ Cardioselective agents (atenolol, metoprolol, bisoprolol) are preferred in asthm
 - `model = "Cloze"`: sections `## Text` (with `{{c1::...}}`) and `## Extra`.
   Every distinct number (`c1`, `c2`, ...) becomes one card.
 - `model = "Basic"`: sections `## Front`, `## Back`, `## Extra`. One card.
-- Emphasis: `<b>` for key terms, `<u>` for buzzwords. Markdown lists and
-  `![alt](...)` images work too.
+- Emphasis: `<b>` for key terms, `<u>` for buzzwords. No inline colors
+  (`style="color:…"`, `<font color>`): most students study in a dark theme
+  and colors aren't adjusted for it, so dark text disappears.
+- Markdown (`**bold**`, lists, `![alt](...)` images) works in these files:
+  deck files are the one place Complement renders markdown. Cards written
+  directly into Complement (the MCP's `create_cards`) are HTML instead.
+- Math: `\(…\)` inline, `\[…\]` on its own line. `$…$` and `$$…$$` work
+  too, but a lone `$40` stays text. Never `[latex]…[/latex]`: the web shows
+  it raw.
 - Images: put the file in `media/` and reference it relative to the note:
-  `![SA node](../../media/sa-node.png)`. Credit it in `CREDITS.md`.
+  `![SA node](../../media/sa-node.png)`. Credit it in `CREDITS.md`. Never put
+  `<svg>` markup inside a note: iOS strips it. Save a drawing as a file in
+  `media/` instead.
 - Tags: no spaces (use `-` or `::`).
 
 ## Ids are students' progress
@@ -131,10 +146,11 @@ notes by id, never by file name.
 - Deleting a note file removes that card from every student who has it, with
   its history. Removing a `{{cN}}` removes that card. Do it only when the user
   wants the card gone.
-- Publishing refuses a commit that removes many notes at once, or that gives
-  existing content a new id. If that happens, you most likely broke ids: restore
-  them from git history (`git log -p -- <file>`). Pass `expected_removals` only
-  when the user confirms the removal is intended.
+- Publishing refuses a commit that removes 10 or more notes that are also
+  more than a quarter of the deck, or that gives existing content a new id.
+  If that happens, you most likely broke ids: restore them from git history
+  (`git log -p -- <file>`). Pass `expected_removals` only when the user
+  confirms the removal is intended.
 
 Students who edit a card themselves keep their version; your later edits to
 that note don't overwrite it.
@@ -176,8 +192,8 @@ Decks on Deck Cloud are public and must be yours or openly licensed.
   lecture outlines, guidelines). Facts aren't owned; wording and images are.
 - Don't copy text, tables or images from textbooks, lecture slides, question
   banks (UWorld, RxPrep, Lexicomp, Pharmacist's Letter) or AnkiWeb decks.
-- Images: your own diagrams (SVG is fine), or Wikimedia Commons / public-domain
-  files, each credited in `CREDITS.md` with its license.
+- Images: your own diagrams (SVG files in `media/` are fine), or Wikimedia
+  Commons / public-domain files, each credited in `CREDITS.md` with its license.
 - Set `license` in `deck.toml` (this template uses `CC-BY-SA-4.0`).
 
 ## Collaborating
